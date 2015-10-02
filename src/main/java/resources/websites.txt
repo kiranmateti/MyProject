@@ -1,0 +1,10 @@
+
+#weather dataset
+http://www.wunderground.com/history/airport/KNUQ/2007/1/1/CustomHistory.html?dayend=31&monthend=12&yearend=2007&req_city=NA&req_state=NA&req_statename=NA
+
+#data files in CSV format for sql database
+http://msftdbprodsamples.codeplex.com/releases/view/55330
+
+#map reduce Joins example
+http://www.codeproject.com/Articles/869383/Implementing-Join-in-Hadoop-Map-Reduce
+
