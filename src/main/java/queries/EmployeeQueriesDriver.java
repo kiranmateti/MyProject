@@ -12,8 +12,17 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+import queries.ComparatorsAndPartitioners.DepartmentAndTitleGroupingComparator;
+import queries.ComparatorsAndPartitioners.DepartmentAndTitleSortingComparator;
+import queries.ComparatorsAndPartitioners.DepartmentPatitioner;
 import queries.EmployeeMapReduce.EmployeeMapper1;
 import queries.EmployeeMapReduce.EmployeeReducer1;
+import queries.EmployeeMapReduce2.EmployeeMapper2;
+import queries.EmployeeMapReduce2.EmployeeReducer2;
+import queries.EmployeeMapReduce3.EmployeeMapper3;
+import queries.EmployeeMapReduce3.EmployeeReducer3;
+import queries.EmployeeMapReduce4.EmployeeMapper4;
+import queries.EmployeeMapReduce4.EmployeeReducer4;
 
 public class EmployeeQueriesDriver {
 
@@ -26,7 +35,7 @@ public class EmployeeQueriesDriver {
 		
 		Configuration conf = new Configuration();
 		          
-        Job job = new Job(conf, "My word Count");
+        Job job = new Job(conf, "Employee Queries");
         job.setJarByClass(EmployeeMapReduce.class);
         
         FileInputFormat.setInputPaths(job, new Path(args[0]));        
@@ -35,12 +44,21 @@ public class EmployeeQueriesDriver {
         //delete the path if already exist
         fileOutputPath.getFileSystem(conf).delete(fileOutputPath,true);
         
-        job.setMapperClass(EmployeeMapper1.class);
-        job.setReducerClass(EmployeeReducer1.class);
+//      job.setMapperClass(EmployeeMapper1.class);
+//      job.setReducerClass(EmployeeReducer1.class);
+
+//      job.setOutputKeyClass(DoubleWritable.class);
+//      job.setOutputValueClass(Text.class);
         
+        job.setMapperClass(EmployeeMapper4.class);
+        job.setReducerClass(EmployeeReducer4.class);
         
-        job.setOutputKeyClass(DoubleWritable.class);
-        job.setOutputValueClass(Text.class);
+//        job.setPartitionerClass(DepartmentPatitioner.class);
+//        job.setSortComparatorClass(DepartmentAndTitleSortingComparator.class);
+//        job.setGroupingComparatorClass(DepartmentAndTitleSortingComparator.class);
+        
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(DoubleWritable.class);
         
         job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(TextOutputFormat.class);

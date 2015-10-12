@@ -43,25 +43,10 @@ public class EmployeeMapReduce {
 				return;
 			}
 			
-			String[] columns = row.split("\"");
-			if( columns.length != 3){
-				System.out.println(" This line is header");
-				return;
-			}
-			
-			System.out.println(columns[0] +","+columns[1]+","+columns[2]);
-			
-			
-			String[] subColumns = columns[2].split(",");
-			System.out.println("length = "+subColumns.length);
-			//System.out.println(columns[0] +","+columns[1]+","+columns[2]+","+columns[3]);
-			if( columns.length != 3){
-				System.out.println(" This line is corrupted and had missing data");
-				return;
-			}
+			String[] columns = row.split(",");		
 			
 			Double salary = 0.0;
-			String salaryStr = subColumns[2];
+			String salaryStr = columns[columns.length-1];
 			try{
 				 salary = Double.parseDouble(salaryStr.substring(1));
 			}catch(Exception ex){
@@ -85,8 +70,7 @@ public class EmployeeMapReduce {
 				StringBuffer buffer = new StringBuffer();
 				for ( Text text : details){
 					buffer.append(text.toString()).append("\n");
-				}
-				System.out.println(" salary - "+salary+", string - "+buffer.toString());
+				}				
 				
 				context.write(salary, new Text(buffer.toString()));
 			}
